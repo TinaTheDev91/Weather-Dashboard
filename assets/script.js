@@ -3,12 +3,11 @@ var searchBtn = document.querySelector('#search-button');
 var cityInput = document.querySelector('#city');
 var prevCityList = document.querySelector('#previous-cities');
 var listElement = document.createElement('li');
-var currentWeather = document.querySelector('#container');
+var currentWeather = document.querySelector('.current-weather');
 var forecast = document.querySelector('#forecast');
 
 var today = dayjs().format('MM/DD/YYYY');
 console.log(today)
-// var city = cityInput.value;
 
 var citySelection = function (event) {
     event.preventDefault();
@@ -16,6 +15,10 @@ var citySelection = function (event) {
     var cityName = cityInput.value;
     console.log('this is my city', cityName)
     fetchCityData(cityName);
+
+    for (var i = 1; i <= 1000; i++) {
+        localStorage.setItem("prevCity" + [i], cityName);
+    }
 
 }
 
@@ -67,9 +70,10 @@ function fetchCityData(city) {
                 
             forecast.append(weatherForecast);
 
-            forecastDate.textContent = dayjs().add(i, 'day').format('MM/DD/YYYY');
+            forecastDate.textContent = dayjs().add(i, 'day').format('M/D/YYYY');
             weatherForecast.append(forecastDate);
             weatherForecast.classList.add('forecast-div');
+            weatherForecast.classList.add('col');
 
             forecastTemp.textContent = 'Temp: ' + Math.round((uvResponse.daily[i].temp.day-273.15) *9 /5 + 32) + '\xB0' + 'F';
             weatherForecast.append(forecastTemp);
@@ -80,20 +84,16 @@ function fetchCityData(city) {
             forecastHumidity.textContent = 'Humidity: ' + uvResponse.daily[i].humidity + '%';
             weatherForecast.append(forecastHumidity);
             }
-
-
-
-
         })
         
     })
     
 }
 
-var geoCode = function (generateGeoCode) {
-    var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=52d138b9667dda9350ee7e1e9b972bc7';
+// var geoCode = function (generateGeoCode) {
+//     var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=52d138b9667dda9350ee7e1e9b972bc7';
 
 
-}
+// }
 
 searchBtn.addEventListener('click', citySelection)
