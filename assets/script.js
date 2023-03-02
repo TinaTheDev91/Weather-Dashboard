@@ -1,12 +1,13 @@
 var prevCity = document.createElement('button');
 var searchBtn = document.querySelector('#search-button');
 var cityInput = document.querySelector('#city');
-var prevCityList = document.querySelector('#previous-cities');
+var prevCityList = document.createElement('ul');
+var searchArea = document.querySelector('#search-area');
 var listElement = document.createElement('li');
 var currentWeather = document.querySelector('.current-weather');
 var forecast = document.querySelector('#forecast');
 
-var today = dayjs().format('MM/DD/YYYY');
+var today = dayjs().format('M/D/YYYY');
 console.log(today)
 
 var citySelection = function (event) {
@@ -16,10 +17,22 @@ var citySelection = function (event) {
     console.log('this is my city', cityName)
     fetchCityData(cityName);
 
-    for (var i = 1; i <= 1000; i++) {
-        localStorage.setItem("prevCity" + [i], cityName);
+    var cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
+    if (cityArray.includes(cityName)) {
+        return;
+    } else {
+        cityArray.push(cityName);
     }
+    localStorage.setItem('cityArray', JSON.stringify(cityArray));
 
+    function generatePreviousCities() {
+        for (var i = 0; i < cityArray.length; i++) {
+        searchArea.append(prevCityList); //append ul element
+        prevCity.textContent = cityArray[i]; //button text
+        listElement.innerHTML = prevCity; //add button as an li
+        prevCityList.append(listElement); 
+    }}
+    generatePreviousCities();
 }
 
 function fetchCityData(city) {
