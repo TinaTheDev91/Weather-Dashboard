@@ -4,17 +4,18 @@ var cityInput = document.querySelector('#city');
 var prevCityList = document.querySelector('#previous-cities');
 var listElement = document.createElement('li');
 var currentWeather = document.querySelector('#container');
+var forecast = document.querySelector('#forecast');
+
+var today = dayjs().format('MM/DD/YYYY');
+console.log(today)
 // var city = cityInput.value;
 
 var citySelection = function (event) {
     event.preventDefault();
-
-    // prevCity.textContent = city;
-    // listElement.innerHTML = prevCity;
-    // document.prevCityList.appendChild(listElement);
+    
     var cityName = cityInput.value;
     console.log('this is my city', cityName)
-    fetchCityData(cityName);cd
+    fetchCityData(cityName);
 
 }
 
@@ -35,11 +36,17 @@ function fetchCityData(city) {
         var latitude = weatherData.coord.lat;
         var longitude = weatherData.coord.lon;
 
-        cityName.textContent = weatherData.name;
+        cityName.textContent = weatherData.name + ' (' + today + ')';
         currentWeather.append(cityName);
 
-        cityTemp.textContent = 'Temperature: ' + Math.round((weatherData.main.temp-273.15) *9 /5 + 32) + '\xB0' + 'F'
-        currentWeather.append(cityTemp)
+        cityTemp.textContent = 'Temperature: ' + Math.round((weatherData.main.temp-273.15) *9 /5 + 32) + '\xB0' + 'F';
+        currentWeather.append(cityTemp);
+
+        cityWind.textContent = 'Wind: ' + weatherData.wind.speed + ' MPH';
+        currentWeather.append(cityWind);
+
+        cityHumidity.textContent = 'Humidity: ' + weatherData.main.humidity + '%';
+        currentWeather.append(cityHumidity);
 
         // get UV data
         var getUV = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&exclude={part}&appid=' + 'f30dc0b71f772a037a522282770190be'
@@ -48,8 +55,31 @@ function fetchCityData(city) {
             return response.json();
         })
         .then(function(uvReponse) {
-            console.log('this is the uv', uvReponse)
+            console.log('this is the uv', uvReponse);
+            var weatherForecast = document.createElement('div');
+            var forecastTemp = document.createElement('h3');
+            var forecastWind = document.createElement('h3');
+            var forecastHumidity = document.createElement('h3');
+
+            for (var i = 0; i < 5; i++) {
+
+            forecast.append(weatherForecast);
+
+            forecastTemp.textContent = 'Temp: ' + Math.round((uvReponse.daily[i].temp.day-273.15) *9 /5 + 32) + '\xB0' + 'F';
+            weatherForecast.append(forecastTemp);
+
+            forecastWind.textContent = 'Wind: ' + uvReponse.daily[i].wind_speed + ' MPH';
+            weatherForecast.append(forecastWind);
+
+            forecastHumidity.textContent = 'Humidity: ' + uvReponse.daily[i].humidity + '%';
+            weatherForecast.append(forecastHumidity);
+            }
+
+
+
+
         })
+        
     })
     
 }
