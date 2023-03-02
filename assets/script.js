@@ -59,17 +59,17 @@ function fetchCityData(city) {
             
             for (var i = 0; i < 5; i++) {
                 var weatherForecast = document.createElement('div');
-                var forecastDate = document.createElement('h3');
-                var forecastTemp = document.createElement('h3');
-                var forecastWind = document.createElement('h3');
-                var forecastHumidity = document.createElement('h3');
+                var forecastDate = document.createElement('h4');
+                var forecastTemp = document.createElement('h4');
+                var forecastWind = document.createElement('h4');
+                var forecastHumidity = document.createElement('h4');
                 var forecastIcon = uvResponse.daily[0].icon;
                 
             forecast.append(weatherForecast);
 
             forecastDate.textContent = dayjs().add(i, 'day').format('MM/DD/YYYY');
             weatherForecast.append(forecastDate);
-
+            weatherForecast.classList.add('forecast-div');
 
             forecastTemp.textContent = 'Temp: ' + Math.round((uvResponse.daily[i].temp.day-273.15) *9 /5 + 32) + '\xB0' + 'F';
             weatherForecast.append(forecastTemp);
