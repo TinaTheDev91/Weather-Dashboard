@@ -67,9 +67,9 @@ function fetchCityData(city) {
                 
             forecast.append(weatherForecast);
 
-            // forecastDate.textContent = today.add(i, 'day');
-            // weatherForecast.append(forecastDate);
-            // console.log(forecastDate)
+            forecastDate.textContent = dayjs().add(i, 'day').format('MM/DD/YYYY');
+            weatherForecast.append(forecastDate);
+
 
             forecastTemp.textContent = 'Temp: ' + Math.round((uvResponse.daily[i].temp.day-273.15) *9 /5 + 32) + '\xB0' + 'F';
             weatherForecast.append(forecastTemp);
