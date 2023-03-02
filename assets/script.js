@@ -12,7 +12,7 @@ console.log(today)
 
 var citySelection = function (event) {
     event.preventDefault();
-    
+
     var cityName = cityInput.value;
     console.log('this is my city', cityName)
     fetchCityData(cityName);
@@ -54,24 +54,30 @@ function fetchCityData(city) {
         .then(function (response) {
             return response.json();
         })
-        .then(function(uvReponse) {
-            console.log('this is the uv', uvReponse);
-            var weatherForecast = document.createElement('div');
-            var forecastTemp = document.createElement('h3');
-            var forecastWind = document.createElement('h3');
-            var forecastHumidity = document.createElement('h3');
-
+        .then(function(uvResponse) {
+            console.log('this is the uv', uvResponse);
+            
             for (var i = 0; i < 5; i++) {
-
+                var weatherForecast = document.createElement('div');
+                var forecastDate = document.createElement('h3');
+                var forecastTemp = document.createElement('h3');
+                var forecastWind = document.createElement('h3');
+                var forecastHumidity = document.createElement('h3');
+                var forecastIcon = uvResponse.daily[0].icon;
+                
             forecast.append(weatherForecast);
 
-            forecastTemp.textContent = 'Temp: ' + Math.round((uvReponse.daily[i].temp.day-273.15) *9 /5 + 32) + '\xB0' + 'F';
+            // forecastDate.textContent = today.add(i, 'day');
+            // weatherForecast.append(forecastDate);
+            // console.log(forecastDate)
+
+            forecastTemp.textContent = 'Temp: ' + Math.round((uvResponse.daily[i].temp.day-273.15) *9 /5 + 32) + '\xB0' + 'F';
             weatherForecast.append(forecastTemp);
 
-            forecastWind.textContent = 'Wind: ' + uvReponse.daily[i].wind_speed + ' MPH';
+            forecastWind.textContent = 'Wind: ' + uvResponse.daily[i].wind_speed + ' MPH';
             weatherForecast.append(forecastWind);
 
-            forecastHumidity.textContent = 'Humidity: ' + uvReponse.daily[i].humidity + '%';
+            forecastHumidity.textContent = 'Humidity: ' + uvResponse.daily[i].humidity + '%';
             weatherForecast.append(forecastHumidity);
             }
 
