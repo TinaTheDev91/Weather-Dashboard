@@ -30,7 +30,9 @@ var citySelection = function (event) {
         for (var i = 0; i < cityArray.length; i++) {
             prevCity.textContent = cityArray[i]; //button text
             listElement.appendChild(prevCity); //add button as an li
+            prevCity.classList.add('prevCityBtn');
             prevCityList.appendChild(listElement); 
+
     }}
     generatePreviousCities();
 }
