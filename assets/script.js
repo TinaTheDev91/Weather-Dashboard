@@ -10,8 +10,16 @@ console.log(today)
 var citySelection = function (event) {
     event.preventDefault();
     
-    var cityName = cityInput.value;
+    var cityName; //= cityInput.value;
+
     console.log('this is my city', cityName)
+
+    if (cityInput.clicked === true) {
+        cityName == cityInput.value;
+    } else if (prevCityBtn.clicked === true) {
+        cityName == prevCityBtn.textContent;
+    }
+
     fetchCityData(cityName);
     
     var cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
@@ -33,6 +41,10 @@ var citySelection = function (event) {
             prevCity.classList.add('prevCityBtn');
             prevCityList.appendChild(listElement); 
 
+            var prevCityBtn = document.querySelector('.prevCityBtn');
+
+            prevCityBtn.addEventListener('click', citySelection);
+            
     }}
     generatePreviousCities();
 }
