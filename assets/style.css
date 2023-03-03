@@ -1,5 +1,5 @@
 .forecast-div {
-    background-color: pink;
+    background-color: #8CACD6;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -15,5 +15,18 @@
 }
 
 h1 {
+    background-color: #8CACD6;
     text-align: center;
+    color: white;
+    padding: 10px;
+}
+
+button {
+    border-radius: 10px;
+    background-color: #D6B68C;
+}
+
+ul {
+    margin: 10px;
+    list-style: none;
 }

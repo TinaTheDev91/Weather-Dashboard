@@ -1,9 +1,6 @@
-var prevCity = document.createElement('button');
 var searchBtn = document.querySelector('#search-button');
 var cityInput = document.querySelector('#city');
-var prevCityList = document.createElement('ul');
 var searchArea = document.querySelector('#search-area');
-var listElement = document.createElement('li');
 var currentWeather = document.querySelector('.current-weather');
 var forecast = document.querySelector('#forecast');
 
@@ -12,25 +9,28 @@ console.log(today)
 
 var citySelection = function (event) {
     event.preventDefault();
-
+    
     var cityName = cityInput.value;
     console.log('this is my city', cityName)
     fetchCityData(cityName);
-
+    
     var cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
     if (cityArray.includes(cityName)) {
-        return;
-    } else {
-        cityArray.push(cityName);
-    }
-    localStorage.setItem('cityArray', JSON.stringify(cityArray));
-
-    function generatePreviousCities() {
+            return;
+        } else {
+            cityArray.push(cityName);
+            }
+            localStorage.setItem('cityArray', JSON.stringify(cityArray));
+            
+        function generatePreviousCities() {
+            var prevCity = document.createElement('button');
+            var prevCityList = document.createElement('ul');
+            var listElement = document.createElement('li');
+        searchArea.appendChild(prevCityList); //append ul element
         for (var i = 0; i < cityArray.length; i++) {
-        searchArea.append(prevCityList); //append ul element
-        prevCity.textContent = cityArray[i]; //button text
-        listElement.innerHTML = prevCity; //add button as an li
-        prevCityList.append(listElement); 
+            prevCity.textContent = cityArray[i]; //button text
+            listElement.appendChild(prevCity); //add button as an li
+            prevCityList.appendChild(listElement); 
     }}
     generatePreviousCities();
 }
@@ -102,11 +102,5 @@ function fetchCityData(city) {
     })
     
 }
-
-// var geoCode = function (generateGeoCode) {
-//     var geoCodeUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=1&appid=52d138b9667dda9350ee7e1e9b972bc7';
-
-
-// }
 
 searchBtn.addEventListener('click', citySelection)
