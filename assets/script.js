@@ -1,6 +1,6 @@
 var searchBtn = document.querySelector('#search-button');
 var cityInput = document.querySelector('#city');
-var searchArea = document.querySelector('#search-area');
+var searchArea = document.querySelector('.search-area');
 var currentWeather = document.querySelector('.current-weather');
 var forecast = document.querySelector('#forecast');
 
@@ -20,9 +20,6 @@ var citySelection = function (event) {
     if (cityInput.clicked === true) {
             cityName;
         } 
-        // else if (prevCityBtn.clicked === true) {
-        //         cityName === prevCityBtn.textContent;
-        //     }
 
         fetchCityData(cityName);
             
@@ -67,12 +64,19 @@ function fetchCityData(city) {
         var cityTemp = document.createElement('h2');
         var cityWind = document.createElement('h2');
         var cityHumidity = document.createElement('h2');
-        var cityIcon = weatherData.weather[0].icon;
+        var cityIconCode = weatherData.weather[0].icon;
         var latitude = weatherData.coord.lat;
         var longitude = weatherData.coord.lon;
+        var weatherIcon = 'http://openweathermap.org/img/wn/' + cityIconCode + '@2x.png';
+
+        var iconHouse = document.createElement('h2');
+        iconHouse.innerHTML = '<img src="' + weatherIcon + '"' + '</img>';
+
+        console.log(iconHouse)
 
         cityName.textContent = weatherData.name + ' (' + today + ')';
         currentWeather.append(cityName);
+        currentWeather.append(iconHouse);
 
         cityTemp.textContent = 'Temperature: ' + Math.round((weatherData.main.temp-273.15) *9 /5 + 32) + '\xB0' + 'F';
         currentWeather.append(cityTemp);
@@ -98,12 +102,19 @@ function fetchCityData(city) {
                 var forecastTemp = document.createElement('h4');
                 var forecastWind = document.createElement('h4');
                 var forecastHumidity = document.createElement('h4');
-                var forecastIcon = uvResponse.daily[0].icon;
-                
+                var forecastIcon = uvResponse.daily[0].weather[0].icon;
+                var iconURL = 'http://openweathermap.org/img/wn/' + forecastIcon + '@2x.png';
+                console.log(forecastIcon);
+
+                var iconHouse = document.createElement('h2');
+                iconHouse.innerHTML = '<img src="' + iconURL + '"' + '</img>';
+                console.log(iconHouse)
+
             forecast.append(weatherForecast);
 
             forecastDate.textContent = dayjs().add(i, 'day').format('M/D/YYYY');
             weatherForecast.append(forecastDate);
+            weatherForecast.append(iconHouse);
             weatherForecast.classList.add('forecast-div');
             weatherForecast.classList.add('col');
 
