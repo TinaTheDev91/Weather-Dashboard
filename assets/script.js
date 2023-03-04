@@ -4,43 +4,48 @@ var searchArea = document.querySelector('#search-area');
 var currentWeather = document.querySelector('.current-weather');
 var forecast = document.querySelector('#forecast');
 
+var prevCityBtn = document.querySelector('.prevCityBtn');
+
 var today = dayjs().format('M/D/YYYY');
 console.log(today)
+
 
 var citySelection = function (event) {
     event.preventDefault();
     
-    var cityName; //= cityInput.value;
-
-    console.log('this is my city', cityName)
-
-    if (cityInput.clicked === true) {
-        cityName == cityInput.value;
-    } else if (prevCityBtn.clicked === true) {
-        cityName == prevCityBtn.textContent;
-    }
-
-    fetchCityData(cityName);
+    var cityName = cityInput.value;
     
+    console.log('this is my city', cityName)
+    
+    if (cityInput.clicked === true) {
+            cityName;
+        } 
+        // else if (prevCityBtn.clicked === true) {
+        //         cityName === prevCityBtn.textContent;
+        //     }
+
+        fetchCityData(cityName);
+            
+            
     var cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
     if (cityArray.includes(cityName)) {
-            return;
-        } else {
-            cityArray.push(cityName);
-            }
-            localStorage.setItem('cityArray', JSON.stringify(cityArray));
-            
-        function generatePreviousCities() {
-            var prevCity = document.createElement('button');
-            var prevCityList = document.createElement('ul');
-            var listElement = document.createElement('li');
+        return;
+    } else {
+        cityArray.push(cityName);
+    }
+    localStorage.setItem('cityArray', JSON.stringify(cityArray));
+    
+    function generatePreviousCities() {
+        var prevCity = document.createElement('button');
+        var prevCityList = document.createElement('ul');
+        var listElement = document.createElement('li');
         searchArea.appendChild(prevCityList); //append ul element
         for (var i = 0; i < cityArray.length; i++) {
             prevCity.textContent = cityArray[i]; //button text
             listElement.appendChild(prevCity); //add button as an li
             prevCity.classList.add('prevCityBtn');
             prevCityList.appendChild(listElement); 
-
+            
             var prevCityBtn = document.querySelector('.prevCityBtn');
 
             prevCityBtn.addEventListener('click', citySelection);
