@@ -133,4 +133,14 @@ function fetchCityData(city) {
     
 }
 
-searchBtn.addEventListener('click', citySelection)
+function clearPrevResults () {
+    var forecastDiv = document.getElementsByClassName('forecast-div');
+    var h2Tags = document.getElementsByTagName('h2');
+
+    forecastDiv.remove();
+    h2Tags.remove();
+
+}
+
+searchBtn.addEventListener('click', clearPrevResults);
+searchBtn.addEventListener('click', citySelection);
