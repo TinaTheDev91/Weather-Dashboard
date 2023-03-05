@@ -24,6 +24,7 @@ h1 {
 button {
     border-radius: 10px;
     background-color: #D6B68C;
+    margin: 5px;
 }
 
 ul {
