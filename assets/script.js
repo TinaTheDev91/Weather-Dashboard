@@ -33,7 +33,7 @@ var citySelection = function (event) {
 
 function getCityHistory() {
     var savedStorage = JSON.parse(localStorage.getItem('cityArray'))
-    console.log('city arrary', savedStorage)
+    console.log('city array', savedStorage)
     var prevCityList = document.createElement('ul');
     var listElement = document.createElement('li');
     if (savedStorage === null){
@@ -58,6 +58,7 @@ function getCityHistory() {
 function createHistory() {
     var searchedCity = cityInput.value
     savedContainer = document.createElement('ul');
+    searchArea.removeChild(searchArea.lastChild);
     searchArea.append(savedContainer);
     if (searchedCity === ''){
         alert('Please enter a city and click "Search"')
@@ -76,6 +77,7 @@ function createHistory() {
     }
     localStorage.setItem('cityArray', JSON.stringify(storage))
     for (var i = 0; i < storage.length; i++) {
+        //create history buttons
         var savedLi = document.createElement('button')
         savedLi.textContent = storage[i]
         savedLi.setAttribute('id', storage[i])
@@ -173,37 +175,3 @@ function fetchCityData(city) {
 
 searchBtn.addEventListener('click', citySelection);
 searchBtn.addEventListener('click', createHistory);
-// getCityHistory();
-
-// function clearPrevResults () {
-    //     var forecastDiv = document.getElementsByClassName('forecast-div');
-    //     var h2Tags = document.getElementsByTagName('h2');
-    
-    //     forecastDiv.remove();
-    //     h2Tags.remove();
-    
-    // }
-    
-    // searchBtn.addEventListener('click', clearPrevResults);
-    
-    // function generatePreviousCities() {
-        //     var prevCity = document.createElement('button');
-        //     var prevCityList = document.createElement('ul');
-        //     var listElement = document.createElement('li');
-        //     searchArea.appendChild(prevCityList); //append ul element
-        //     for (var i = 0; i < cityArray.length; i++) {
-    //         prevCity.textContent = cityArray[i]; //button text
-    //         prevCity.setAttribute('id', cityArray[i]);
-    //         listElement.appendChild(prevCity); //add button as an li
-    //         prevCity.classList.add('prevCityBtn');
-    //         prevCityList.appendChild(listElement); 
-    
-    //         var prevCityBtn = document.querySelector('.prevCityBtn');
-    
-    //         prevCityBtn.addEventListener('click', function(event) {
-    //             var chosenCity = event.target.id;
-    //             fetchCityData(chosenCity)
-    //         });
-            
-    // }}
-    // generatePreviousCities();
