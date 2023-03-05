@@ -9,6 +9,7 @@ var prevCityBtn = document.querySelector('.prevCityBtn');
 var today = dayjs().format('M/D/YYYY');
 console.log(today)
 
+getCityHistory();
 
 var citySelection = function (event) {
     event.preventDefault();
@@ -21,8 +22,7 @@ var citySelection = function (event) {
             cityName;
         } 
 
-        fetchCityData(cityName);
-            
+        fetchCityData(cityName);            
             
     var cityArray = JSON.parse(localStorage.getItem('cityArray')) || [];
     if (cityArray.includes(cityName)) {
@@ -32,28 +32,86 @@ var citySelection = function (event) {
     }
     localStorage.setItem('cityArray', JSON.stringify(cityArray));
     
-    function generatePreviousCities() {
-        var prevCity = document.createElement('button');
-        var prevCityList = document.createElement('ul');
-        var listElement = document.createElement('li');
-        searchArea.appendChild(prevCityList); //append ul element
-        for (var i = 0; i < cityArray.length; i++) {
-            prevCity.textContent = cityArray[i]; //button text
-            listElement.appendChild(prevCity); //add button as an li
-            prevCity.classList.add('prevCityBtn');
-            prevCityList.appendChild(listElement); 
+    // function generatePreviousCities() {
+    //     var prevCity = document.createElement('button');
+    //     var prevCityList = document.createElement('ul');
+    //     var listElement = document.createElement('li');
+    //     searchArea.appendChild(prevCityList); //append ul element
+    //     for (var i = 0; i < cityArray.length; i++) {
+    //         prevCity.textContent = cityArray[i]; //button text
+    //         prevCity.setAttribute('id', cityArray[i]);
+    //         listElement.appendChild(prevCity); //add button as an li
+    //         prevCity.classList.add('prevCityBtn');
+    //         prevCityList.appendChild(listElement); 
             
-            var prevCityBtn = document.querySelector('.prevCityBtn');
+    //         var prevCityBtn = document.querySelector('.prevCityBtn');
 
-            prevCityBtn.addEventListener('click', citySelection);
+    //         prevCityBtn.addEventListener('click', function(event) {
+    //             var chosenCity = event.target.id;
+    //             fetchCityData(chosenCity)
+    //         });
             
-    }}
-    generatePreviousCities();
+    // }}
+    // generatePreviousCities();
+}
+
+function getCityHistory() {
+    var savedStorage = JSON.parse(localStorage.getItem('cityArray'))
+    console.log('city arrary', savedStorage)
+    var prevCityList = document.createElement('ul');
+    var listElement = document.createElement('li');
+    if (savedStorage === null){
+        savedStorage = []
+    }
+
+    for (var i = 0; i < savedStorage.length; i++){
+        var prevCity = document.createElement('button');
+        prevCity.textContent = savedStorage[i]; //button text
+        prevCity.setAttribute('id', savedStorage[i]);
+        listElement.appendChild(prevCity); //add button as an li
+        prevCity.classList.add('prevCityBtn');
+        prevCityList.appendChild(listElement); 
+
+        prevCity.addEventListener('click', function(event) {
+            var chosenCity = event.target.id;
+            fetchCityData(chosenCity)
+                    });
+    }
+}
+
+function createHistory() {
+    var searchedCity = cityInput.value
+    savedContainer = document.createElement('ul');
+    searchArea.append(savedContainer);
+    if (searchedCity === ''){
+        alert('type a city')
+        getCityHistory()
+        return;
+    }
+
+    var storage = JSON.parse(localStorage.getItem('cityArray'))
+    if(storage === null){
+        storage = []
+    }
+    storage.push(searchedCity)
+    localStorage.setItem('cityArray', JSON.stringify(storage))
+    for (var i = 0; i < storage.length; i++) {
+        var savedLi = document.createElement('button')
+        savedLi.textContent = storage[i]
+        savedLi.setAttribute('id', storage[i])
+        savedContainer.prepend(savedLi)
+        savedLi.addEventListener('click', function (event) {
+            var clickedCity = event.target.id
+            fetchCityData(clickedCity)
+        })
+    }
 }
 
 function fetchCityData(city) {
     var apiKey = '52d138b9667dda9350ee7e1e9b972bc7';
     var geoCodeUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&limit=1&appid=' + apiKey;
+    currentWeather.innerHTML = '';
+    forecast.innerHTML = '';
     fetch(geoCodeUrl)
     .then(function (response) {
         return response.json();
@@ -133,14 +191,14 @@ function fetchCityData(city) {
     
 }
 
-function clearPrevResults () {
-    var forecastDiv = document.getElementsByClassName('forecast-div');
-    var h2Tags = document.getElementsByTagName('h2');
-
-    forecastDiv.remove();
-    h2Tags.remove();
-
-}
-
-searchBtn.addEventListener('click', clearPrevResults);
 searchBtn.addEventListener('click', citySelection);
+// function clearPrevResults () {
+//     var forecastDiv = document.getElementsByClassName('forecast-div');
+//     var h2Tags = document.getElementsByTagName('h2');
+
+//     forecastDiv.remove();
+//     h2Tags.remove();
+
+// }
+
+// searchBtn.addEventListener('click', clearPrevResults);
