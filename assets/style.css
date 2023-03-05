@@ -27,12 +27,14 @@ button {
     margin: 5px;
 }
 
-ul {
-    margin: 10px;
-    list-style: none;
-}
-
 img {
     max-width: 40%;
     height: auto;
+}
+
+.previous-searches {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0px;
+    width: 16rem;
 }

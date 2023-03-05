@@ -58,6 +58,7 @@ function getCityHistory() {
 function createHistory() {
     var searchedCity = cityInput.value
     savedContainer = document.createElement('ul');
+    savedContainer.classList.add('previous-searches');
     searchArea.removeChild(searchArea.lastChild);
     searchArea.append(savedContainer);
     if (searchedCity === ''){
