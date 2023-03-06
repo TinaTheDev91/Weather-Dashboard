@@ -21,6 +21,10 @@ h1 {
     padding: 10px;
 }
 
+h2, h4 {
+    font-size: large;
+}
+
 button {
     border-radius: 10px;
     background-color: #D6B68C;

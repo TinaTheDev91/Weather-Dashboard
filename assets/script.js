@@ -14,7 +14,7 @@ var citySelection = function (event) {
     
     var cityName = cityInput.value;
     
-    console.log('this is my city', cityName)
+    console.log('this is my city', cityName);
     
     if (cityInput.clicked === true) {
         cityName;
@@ -50,7 +50,7 @@ function getCityHistory() {
         
         prevCity.addEventListener('click', function(event) {
             var chosenCity = event.target.id;
-            fetchCityData(chosenCity)
+            fetchCityData(chosenCity);
         });
     }
 }
@@ -61,31 +61,31 @@ function createHistory() {
     savedContainer.classList.add('previous-searches');
     searchArea.removeChild(searchArea.lastChild);
     searchArea.append(savedContainer);
-    if (searchedCity === ''){
-        alert('Please enter a city and click "Search"')
-        getCityHistory()
+    if (searchedCity === '') {
+        alert('Please enter a city and click "Search"');
+        getCityHistory();
         return;
     }
     
-    var storage = JSON.parse(localStorage.getItem('cityArray'))
+    var storage = JSON.parse(localStorage.getItem('cityArray'));
     if(storage === null){
-        storage = []
+        storage = [];
     }
     if (!storage.includes(searchedCity)) {
         storage.push(searchedCity);
     } else {
         fetchCityData();
     }
-    localStorage.setItem('cityArray', JSON.stringify(storage))
+    localStorage.setItem('cityArray', JSON.stringify(storage));
     for (var i = 0; i < storage.length; i++) {
         //create history buttons
-        var savedLi = document.createElement('button')
-        savedLi.textContent = storage[i]
-        savedLi.setAttribute('id', storage[i])
-        savedContainer.append(savedLi)
+        var savedLi = document.createElement('button');
+        savedLi.textContent = storage[i];
+        savedLi.setAttribute('id', storage[i]);
+        savedContainer.append(savedLi);
         savedLi.addEventListener('click', function (event) {
-            var clickedCity = event.target.id
-            fetchCityData(clickedCity)
+            var clickedCity = event.target.id;
+            fetchCityData(clickedCity);
         })
     }
 }
